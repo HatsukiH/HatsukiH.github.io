@@ -11,6 +11,10 @@ import {
 import { onMount } from "svelte";
 import type { LIGHT_DARK_MODE } from "@/types/config.ts";
 
+// Astro 的 client:only 指令要求组件能接收额外属性，而无 props 的 Svelte 组件
+// 类型会退化成 Record<string, never>，导致 astro check 报错，这里显式声明
+const { ..._unusedProps }: Record<string, unknown> = $props();
+
 const seq: LIGHT_DARK_MODE[] = [LIGHT_MODE, DARK_MODE, AUTO_MODE];
 let mode: LIGHT_DARK_MODE = $state(AUTO_MODE);
 
